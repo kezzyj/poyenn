@@ -108,6 +108,11 @@ class Product extends Model
         return $this->hasMany(ProductAttribute::class);
     }
 
+    public function enquiries(): HasMany
+    {
+        return $this->hasMany(Enquiry::class);
+    }
+
     // Scopes
     public function scopeActive($query)
     {

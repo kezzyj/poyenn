@@ -170,41 +170,72 @@
                         <p class="text-gray-700 mb-6">{{ $product->short_description }}</p>
                     @endif
 
-                    {{-- Add to Cart --}}
-                    @if($product->is_in_stock)
-                        <div class="space-y-3 mb-6">
-                            <div class="flex items-center space-x-3">
-                                <label class="text-sm font-medium text-gray-700">Quantity:</label>
-                                <div class="flex items-center border border-gray-300 rounded-lg">
-                                    <button type="button" @click="quantity > 1 ? quantity-- : null"
-                                            class="px-3 py-2 text-gray-600 hover:bg-gray-100">−</button>
-                                    <input type="number" x-model="quantity" min="1" max="{{ $product->stock_quantity }}"
-                                           class="w-16 text-center border-0 focus:ring-0">
-                                    <button type="button" @click="quantity++"
-                                            class="px-3 py-2 text-gray-600 hover:bg-gray-100">+</button>
+                   
+                    {{-- Request a Quote --}}
+<div class="space-y-3 mb-6">
+    @if (session('success'))
+        <div class="bg-green-50 border border-green-200 text-green-700 rounded-lg p-4 text-sm">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <button type="button" @click="enquiryOpen = true"
+            class="w-full px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition flex items-center justify-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4v-4z"/>
+        </svg>
+        Request a Quote
+    </button>
+
+                        {{-- Enquiry Modal --}}
+                        <div x-show="enquiryOpen" x-cloak
+                            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+                            @click.self="enquiryOpen = false">
+                            <div class="bg-white rounded-lg max-w-md w-full p-6" @click.stop>
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-gray-900">Request a Quote</h3>
+                                    <button type="button" @click="enquiryOpen = false" class="text-gray-400 hover:text-gray-600">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                    </button>
                                 </div>
-                            </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                <button type="button" @click="addToCart()"
-                                        class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition flex items-center justify-center">
-                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17"/>
-                                    </svg>
-                                    Add to Cart
-                                </button>
-
-                                <button type="button" @click="buyNow()"
-                                        class="px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold rounded-lg transition">
-                                    Buy Now
-                                </button>
+                                <form method="POST" action="{{ route('shop.enquiries.store', $product) }}" class="space-y-4">
+                                    @csrf
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                                        <input type="text" name="customer_name" required
+                                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                                        <input type="text" name="phone" required
+                                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Email (optional)</label>
+                                        <input type="email" name="email"
+                                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                                        <input type="text" name="location"
+                                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Message (optional)</label>
+                                        <textarea name="message" rows="3"
+                                                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                                    </div>
+                                    <button type="submit"
+                                            class="w-full px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition">
+                                        Submit Enquiry
+                                    </button>
+                                </form>
                             </div>
                         </div>
-                    @else
-                        <div class="bg-gray-100 rounded-lg p-4 mb-6 text-center text-gray-600">
-                            This product is currently out of stock
-                        </div>
-                    @endif
+                    </div>
 
                     {{-- Trust Badges --}}
                     <div class="border-t border-gray-100 pt-4 space-y-2 text-sm text-gray-600">
@@ -295,6 +326,7 @@
                     quantity: 1,
                     totalImages: imageCount,
                     isAdding: false,
+                    enquiryOpen: false,
 
                     async addToCart(redirectToCart = false) {
                         if (this.isAdding) return;

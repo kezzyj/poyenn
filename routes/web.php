@@ -16,14 +16,16 @@ use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Shop\HomeController;
 use App\Http\Controllers\Shop\ProductController as ShopProductController;
 use App\Http\Controllers\Shop\CategoryController as ShopCategoryController;
+use App\Http\Controllers\Shop\EnquiryController as ShopEnquiryController;
 
 // ================================
 // CUSTOMER STOREFRONT (PUBLIC)
 // ================================
-Route::name('shop.')->group(function () {
+    Route::name('shop.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/products', [ShopProductController::class, 'index'])->name('products.index');
     Route::get('/products/{product:slug}', [ShopProductController::class, 'show'])->name('products.show');
+    Route::post('products/{product}/enquire', [ShopEnquiryController::class, 'store'])->name('enquiries.store');
     Route::get('/categories/{category:slug}', [ShopCategoryController::class, 'show'])->name('categories.show');
     Route::get('/track', [\App\Http\Controllers\Shop\OrderController::class, 'track'])->name('orders.track');
     
@@ -90,27 +92,27 @@ use App\Http\Controllers\Agent\AuthController as AgentAuthController;
 // ================================
 // DELIVERY AGENT ROUTES
 // ================================
-Route::prefix('agent')->name('agent.')->group(function () {
+// Route::prefix('agent')->name('agent.')->group(function () {
 
-    // Guest routes (not logged in)
-    Route::middleware('guest:agent')->group(function () {
-        Route::get('login', [AgentAuthController::class, 'showLogin'])->name('login');
-        Route::post('login', [AgentAuthController::class, 'login'])->name('login.submit');
-    });
+//     // Guest routes (not logged in)
+//     Route::middleware('guest:agent')->group(function () {
+//         Route::get('login', [AgentAuthController::class, 'showLogin'])->name('login');
+//         Route::post('login', [AgentAuthController::class, 'login'])->name('login.submit');
+//     });
 
-    // Protected routes (logged in)
-        Route::middleware('auth:agent')->group(function () {
-        Route::get('dashboard', [\App\Http\Controllers\Agent\DashboardController::class, 'index'])->name('dashboard');
-        Route::get('history', [\App\Http\Controllers\Agent\DashboardController::class, 'history'])->name('history');
-        Route::get('deliveries/{delivery}', [\App\Http\Controllers\Agent\DashboardController::class, 'show'])->name('delivery.show');
+//     // Protected routes (logged in)
+//         Route::middleware('auth:agent')->group(function () {
+//         Route::get('dashboard', [\App\Http\Controllers\Agent\DashboardController::class, 'index'])->name('dashboard');
+//         Route::get('history', [\App\Http\Controllers\Agent\DashboardController::class, 'history'])->name('history');
+//         Route::get('deliveries/{delivery}', [\App\Http\Controllers\Agent\DashboardController::class, 'show'])->name('delivery.show');
 
-        Route::post('deliveries/{delivery}/pick-up', [\App\Http\Controllers\Agent\DashboardController::class, 'pickUp'])->name('delivery.pick-up');
-        Route::post('deliveries/{delivery}/in-transit', [\App\Http\Controllers\Agent\DashboardController::class, 'inTransit'])->name('delivery.in-transit');
-        Route::post('deliveries/{delivery}/deliver', [\App\Http\Controllers\Agent\DashboardController::class, 'deliver'])->name('delivery.deliver');
-        Route::post('deliveries/{delivery}/fail', [\App\Http\Controllers\Agent\DashboardController::class, 'fail'])->name('delivery.fail');
+//         Route::post('deliveries/{delivery}/pick-up', [\App\Http\Controllers\Agent\DashboardController::class, 'pickUp'])->name('delivery.pick-up');
+//         Route::post('deliveries/{delivery}/in-transit', [\App\Http\Controllers\Agent\DashboardController::class, 'inTransit'])->name('delivery.in-transit');
+//         Route::post('deliveries/{delivery}/deliver', [\App\Http\Controllers\Agent\DashboardController::class, 'deliver'])->name('delivery.deliver');
+//         Route::post('deliveries/{delivery}/fail', [\App\Http\Controllers\Agent\DashboardController::class, 'fail'])->name('delivery.fail');
 
-        Route::post('logout', [AgentAuthController::class, 'logout'])->name('logout');
-    });
-});
+//         Route::post('logout', [AgentAuthController::class, 'logout'])->name('logout');
+//     });
+// });
 
 require __DIR__.'/auth.php';
