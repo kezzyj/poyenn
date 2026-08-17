@@ -11,16 +11,22 @@ class Enquiry extends Model
     use HasFactory;
 
     protected $fillable = [
-        'platform_id',
-        'product_id',
-        'customer_name',
-        'phone',
-        'email',
-        'message',
-        'location',
-        'status',
-        'admin_notes',
-    ];
+    'platform_id',
+    'customer_id',
+    'product_id',
+    'customer_name',
+    'phone',
+    'email',
+    'message',
+    'location',
+    'status',
+    'admin_notes',
+];
+
+public function customer(): BelongsTo
+{
+    return $this->belongsTo(Customer::class);
+}
 
     public function platform(): BelongsTo
     {

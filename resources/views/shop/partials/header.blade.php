@@ -39,12 +39,12 @@
             <div class="flex items-center space-x-2">
 
                 {{-- Cart --}}
-                <a href="{{ route('shop.cart.index') }}" class="relative p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                <!-- <a href="{{ route('shop.cart.index') }}" class="relative p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
                     <span class="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
-                </a>
+                </a> -->
 
                 {{-- Account --}}
                 @auth
@@ -63,8 +63,7 @@
                                 <p class="text-sm font-semibold text-gray-900">{{ auth()->user()->full_name }}</p>
                                 <p class="text-xs text-gray-500">{{ auth()->user()->email }}</p>
                             </div>
-                            <a href="{{ route('shop.orders.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Orders</a>                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Orders</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Saved Addresses</a>
+<a href="{{ route('shop.enquiries.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Enquiries</a>                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Saved Addresses</a>
                             <div class="border-t border-gray-100 mt-1">
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf

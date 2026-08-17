@@ -42,6 +42,7 @@ use App\Http\Controllers\Shop\EnquiryController as ShopEnquiryController;
         Route::post('/checkout/place-order', [\App\Http\Controllers\Shop\CheckoutController::class, 'placeOrder'])->name('checkout.place-order');
         Route::get('/orders', [\App\Http\Controllers\Shop\OrderController::class, 'index'])->name('orders.index');
         Route::get('/orders/{order}', [\App\Http\Controllers\Shop\OrderController::class, 'show'])->name('orders.show');
+        Route::get('/enquiries', [ShopEnquiryController::class, 'index'])->name('enquiries.index');
         Route::get('/payment/callback', [\App\Http\Controllers\Shop\PaymentController::class, 'callback'])->name('payment.callback');
         Route::post('/payment/retry/{order}', [\App\Http\Controllers\Shop\PaymentController::class, 'retry'])->name('payment.retry');
     });
@@ -84,6 +85,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('customers', [\App\Http\Controllers\Admin\CustomerController::class, 'index'])->name('customers.index');
         Route::get('customers/{customer}', [\App\Http\Controllers\Admin\CustomerController::class, 'show'])->name('customers.show');
         Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
+        Route::get('enquiries', [\App\Http\Controllers\Admin\EnquiryController::class, 'index'])->name('enquiries.index');
+        Route::get('enquiries/{enquiry}', [\App\Http\Controllers\Admin\EnquiryController::class, 'show'])->name('enquiries.show');
+        Route::post('enquiries/{enquiry}/status', [\App\Http\Controllers\Admin\EnquiryController::class, 'updateStatus'])->name('enquiries.update-status');
     });
 });
 

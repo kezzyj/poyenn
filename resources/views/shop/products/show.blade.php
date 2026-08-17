@@ -133,7 +133,7 @@
                         <p class="text-xs text-gray-500 mb-4">SKU: {{ $product->sku }}</p>
                     @endif
 
-                    {{-- Price --}}
+                    <!-- {{-- Price --}}
                     <div class="flex items-baseline space-x-3 mb-4">
                         <p class="text-3xl md:text-4xl font-bold text-gray-900">₦{{ number_format($product->price, 2) }}</p>
                         @if($product->compare_price && $product->compare_price > $product->price)
@@ -142,7 +142,7 @@
                                 Save {{ $product->discount_percentage }}%
                             </span>
                         @endif
-                    </div>
+                    </div> -->
 
                     {{-- Stock Status --}}
                     <div class="mb-4">
