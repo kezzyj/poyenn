@@ -63,7 +63,8 @@
                                 <p class="text-sm font-semibold text-gray-900">{{ auth()->user()->full_name }}</p>
                                 <p class="text-xs text-gray-500">{{ auth()->user()->email }}</p>
                             </div>
-<a href="{{ route('shop.enquiries.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Enquiries</a>                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Saved Addresses</a>
+<a href="{{ route('shop.enquiries.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Enquiries</a>                            
+<!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Saved Addresses</a> -->
                             <div class="border-t border-gray-100 mt-1">
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
