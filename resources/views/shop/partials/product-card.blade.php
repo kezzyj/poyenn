@@ -15,12 +15,6 @@
             </div>
         @endif
 
-        @if($product->compare_price && $product->compare_price > $product->price)
-            <span class="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-                -{{ $product->discount_percentage }}%
-            </span>
-        @endif
-
         @if(!$product->is_in_stock)
             <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                 <span class="bg-red-500 text-white text-sm font-semibold px-3 py-1 rounded">Out of Stock</span>
@@ -33,11 +27,6 @@
             {{ $product->name }}
         </h3>
 
-        <div class="flex items-center space-x-2">
-            <p class="text-base font-bold text-gray-900">₦{{ number_format($product->price, 0) }}</p>
-            @if($product->compare_price && $product->compare_price > $product->price)
-                <p class="text-xs text-gray-400 line-through">₦{{ number_format($product->compare_price, 0) }}</p>
-            @endif
-        </div>
+        <p class="text-sm font-medium text-indigo-600">Request a Quote</p>
     </div>
 </a>

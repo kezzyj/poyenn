@@ -26,12 +26,20 @@ class ProductController extends Controller
         }
 
         // Filter by category
-        if ($request->filled('category')) {
-            $category = Category::where('platform_id', $platform->id)
-                ->where('slug', $request->category)
-                ->first();
+            if ($request->filled('category')) {
+                $category = Category::where('platform_id', $platform->id)
+                    ->where('slug', $request->category)
+                    ->first();
+
             if ($category) {
-                $query->where('category_id', $category->id);
+                $categoryIds = Category::where('platform_id', $platform->id)
+                    ->where(function ($q) use ($category) {
+                        $q->where('id', $category->id)
+                        ->orWhere('parent_id', $category->id);
+                    })
+                    ->pluck('id');
+
+                $query->whereIn('category_id', $categoryIds);
             }
         }
 

@@ -89,23 +89,6 @@
                                 </div>
                             @endif
 
-                            {{-- Price Range --}}
-                            <div class="bg-white rounded-lg border border-gray-200 p-4">
-                                <h3 class="font-semibold text-gray-900 mb-3 text-sm">Price Range (₦)</h3>
-                                <div class="grid grid-cols-2 gap-2 mb-3">
-                                    <input type="number" name="min_price" value="{{ request('min_price') }}"
-                                           placeholder="Min" min="0"
-                                           class="px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                                    <input type="number" name="max_price" value="{{ request('max_price') }}"
-                                           placeholder="Max" min="0"
-                                           class="px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                                </div>
-                                <button type="submit"
-                                        class="w-full px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded">
-                                    Apply Price
-                                </button>
-                            </div>
-
                             {{-- In Stock --}}
                             <div class="bg-white rounded-lg border border-gray-200 p-4">
                                 <label class="flex items-center cursor-pointer">
@@ -117,7 +100,7 @@
                                 </label>
                             </div>
 
-                            @if(request()->hasAny(['category', 'brands', 'min_price', 'max_price', 'in_stock']))
+                                @if(request()->hasAny(['category', 'brands', 'in_stock']))
                                 <a href="{{ route('shop.products.index') . (request('search') ? '?search=' . request('search') : '') }}"
                                    class="block text-center w-full px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded">
                                     Clear All Filters
