@@ -50,6 +50,10 @@
                     >
                 </div>
 
+                <div class="text-right mb-4 -mt-2">
+                    <a href="{{ route('admin.password.request') }}" class="text-sm text-indigo-600 hover:text-indigo-800">Forgot your password?</a>
+                </div>
+
                 <div class="flex items-center mb-6">
                     <input
                         type="checkbox"
