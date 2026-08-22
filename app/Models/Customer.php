@@ -66,4 +66,38 @@ class Customer extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Order::class);
     }
+
+    public function sendEmailVerificationNotification()
+{
+    $notifier = app(\App\Services\NotificationService::class);
+
+    $verificationUrl = \Illuminate\Support\Facades\URL::temporarySignedRoute(
+        'verification.verify',
+        now()->addMinutes(60),
+        ['id' => $this->getKey(), 'hash' => sha1($this->getEmailForVerification())]
+    );
+
+    $notifier->sendEmail(
+        toEmail: $this->email,
+        toName: $this->first_name,
+        subject: 'Verify Your Email Address',
+        htmlContent: "<p>Please click the link below to verify your email address.</p><p><a href=\"{$verificationUrl}\">Verify Email</a></p><p>If you did not create an account, no further action is required.</p>",
+        customerId: $this->id,
+    );
+}
+
+public function sendPasswordResetNotification($token)
+{
+    $notifier = app(\App\Services\NotificationService::class);
+
+    $resetUrl = url(route('password.reset', ['token' => $token, 'email' => $this->email], false));
+
+    $notifier->sendEmail(
+        toEmail: $this->email,
+        toName: $this->first_name,
+        subject: 'Reset Password Notification',
+        htmlContent: "<p>You are receiving this email because we received a password reset request for your account.</p><p><a href=\"{$resetUrl}\">Reset Password</a></p><p>This password reset link will expire in 60 minutes.</p><p>If you did not request a password reset, no further action is required.</p>",
+        customerId: $this->id,
+    );
+}
 }
