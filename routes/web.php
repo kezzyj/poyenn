@@ -88,6 +88,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('enquiries', [\App\Http\Controllers\Admin\EnquiryController::class, 'index'])->name('enquiries.index');
         Route::get('enquiries/{enquiry}', [\App\Http\Controllers\Admin\EnquiryController::class, 'show'])->name('enquiries.show');
         Route::post('enquiries/{enquiry}/status', [\App\Http\Controllers\Admin\EnquiryController::class, 'updateStatus'])->name('enquiries.update-status');
+        Route::middleware('super_admin')->group(function () {
+        Route::get('admins', [\App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admins.index');
+        Route::get('admins/create', [\App\Http\Controllers\Admin\AdminController::class, 'create'])->name('admins.create');
+        Route::post('admins', [\App\Http\Controllers\Admin\AdminController::class, 'store'])->name('admins.store');
+        Route::post('admins/{admin}/toggle-status', [\App\Http\Controllers\Admin\AdminController::class, 'toggleStatus'])->name('admins.toggle-status');
+        Route::delete('admins/{admin}', [\App\Http\Controllers\Admin\AdminController::class, 'destroy'])->name('admins.destroy');
+});
     });
 });
 
