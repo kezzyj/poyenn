@@ -44,7 +44,12 @@ class RegisteredUserController extends Controller
                 'max:255',
                 'unique:customers,email,NULL,id,platform_id,' . $platform->id,
             ],
-            'phone' => ['required', 'string', 'max:20'],
+            'phone' => [
+            'required',
+            'string',
+            'max:20',
+            'unique:customers,phone,NULL,id,platform_id,' . $platform->id,
+        ],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
